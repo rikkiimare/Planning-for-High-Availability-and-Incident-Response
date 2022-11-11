@@ -1,12 +1,12 @@
 resource "aws_instance" "ubuntu" {
-  ami           = var.aws_amivar.aws_ami
-  count = var.instance_countvar.instance_count
-  instance_type = "t3.micro""t3.micro"
+  ami           = var.aws_ami
+  count = var.instance_count
+  instance_type = "t3.micro"
   subnet_id = var.public_subnet_ids[0]
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
 
   tags = {
-    Name = "Ubuntu-WebUbuntu-Web"
+    Name = "Ubuntu-Web"
   }
 }
 
@@ -38,5 +38,5 @@ resource "aws_security_group" "ec2_sg" {
 
   tags = {
     Name = "ec2_sg"
-  } 
+  }
 }
