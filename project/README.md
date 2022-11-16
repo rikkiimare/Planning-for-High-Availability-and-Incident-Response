@@ -49,7 +49,9 @@ Clone the appropriate git repo with the starter code. There will be 2 folders. Z
     - click next until created.
     - Update `_config.tf` in the `zone2` folder with your S3 bucket name where you will replace `<your_name>` with your name
     - **NOTE**: S3 bucket names MUST be globally unique!
+**< END VIDEO 1 >**
 
+**< START VIDEO 2 >**
 5. Create a private key pair for your EC2 instances
     - Do this in **BOTH** `us-east-2` and `us-west-1`
     - Name the key `udacity`
@@ -76,17 +78,19 @@ Clone the appropriate git repo with the starter code. There will be 2 folders. Z
     - Clone the starter code from the git repo to a folder CloudShell
     - `cd` into the `zone1` folder
     - `terraform init`
-    - `terraform apply`
+    - `terraform apply --auto-approve`
 
 **NOTE** The first time you run `terraform apply` you may see errors about the Kubernetes namespace or an RDS error. Running it again AND performing the step below should clear up those errors.
 
 8. Setup Kubernetes config so you can ping the EKS cluster
    - `aws eks --region us-east-2 update-kubeconfig --name udacity-cluster`
    - Change kubernetes context to the new AWS cluster
-     - `kubectl config use-context <cluster_name>`
+     - `kubectl config use-context <cluster_name arn:aws>`
        - e.g ` arn:aws:eks:us-east-2:139802095464:cluster/udacity-cluster`
    - Confirm with: `kubectl get pods --all-namespaces`
    - Then run `kubectl create namespace monitoring`
+**< END VIDEO 2 >**
+
    <!-- - Change context to `udacity` namespace
      - `kubectl config set-context --current --namespace=udacity` -->
 
@@ -109,13 +113,17 @@ sudo nginx -t
 sudo systemctl restart nginx
 ``` -->
 
+**< START VIDEO 3 >**
 9. Login to the AWS console and copy the public IP address of your Ubuntu-Web EC2 instance. Ensure you are in the us-east-2 region.
 
 10. Edit the `prometheus-additional.yaml` file and replace the `<public_ip>` entries with the public IP of your Ubuntu Web. Save the file.
 
+10a. Use git commands to copy the changes up to your repo
+10b. Then copy the repo down to you AWS cloudshell
+
 11. Install Prometheus and Grafana
 
-    Change directories to your project directory `cd ../..`
+    Change directories to your **project** directory `cd ../..`
 
     `kubectl create secret generic additional-scrape-configs --from-file=prometheus-additional.yaml --namespace monitoring`
 
@@ -131,9 +139,13 @@ sudo systemctl restart nginx
 
 <!-- Point your local web browser to http://localhost:8888 for Grafana access and http://localhost:8889 for Prometheus access -->
 
-Get the DNS of your load balancer provisioned to access Grafana. You can find this by opening your AWS console and going to EC2 -> Load Balancers and selecting the load balancer provisioned. The DNS name of it will be listed below that you can copy and paste into your browser. Type that into your web browser to access Grafana.
+Get the DNS of your load balancer provisioned to access Grafana. 
+You can find this by opening your AWS console and going to EC2 -> Load Balancers and selecting the load balancer provisioned.
+The DNS name of it will be listed below that you can copy and paste into your browser.
+Type that into your web browser to access Grafana.
 
 Login to Grafana with `admin` for the username and `prom-operator` for the password.
+**< END VIDEO 3 >**
 
 12. Install Postman from [here](https://www.postman.com/downloads/). See additional instructions for [importing the collection, and enviroment files](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/#importing-postman-data)
 
