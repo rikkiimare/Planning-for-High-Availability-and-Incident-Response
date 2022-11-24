@@ -23,6 +23,10 @@ Clone the appropriate git repo with the starter code. There will be 2 folders. Z
 <!-- 1. Set up your aws credentials from Udacity AWS Gateway locally
     - https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
     - Set your region to `us-east-1` -->
+    ----------------------------------------------------------
+    aws configure get region
+    aws configure set region us-east-1
+    ----------------------------------------------------------
 
 2. Copy the AMI to your account
 
@@ -37,7 +41,21 @@ Clone the appropriate git repo with the starter code. There will be 2 folders. Z
         - `aws ec2 copy-image --source-image-id <your-ami-id-from-above> --source-region us-east-1 --region us-west-1 --name "udacity-<your_name>"`
 
     - Make note of the ami output from the above 2 commands. You'll need to put this in the `ec2.tf` file for `zone1` for `us-east-2` and in `ec2.tf` file for `zone2` for `us-west-1` respectively
+<!-- ----------------------------------------------------------
 
+AMI details
+east-1
+"ImageId": "ami-0d2e5365761b86bfa"
+
+{east-2
+    "ImageId": "ami-062a001e7b2179fee"
+}
+{west-1
+    "ImageId": "ami-0a4dfce14896f1f90"
+}
+
+
+---------------------------------------------------------- -->
     <!-- - Set your aws cli config to `us-east-2` -->
 
 3. Close your CloudShell. Change your region to `us-east-2`. From the AWS console create an S3 bucket in `us-east-2` called `udacity-tf-<your_name>` e.g `udacity-tf-tscotto`
@@ -79,6 +97,29 @@ Clone the appropriate git repo with the starter code. There will be 2 folders. Z
     - `cd` into the `zone1` folder
     - `terraform init`
     - `terraform apply --auto-approve`
+**----------------------------------------------------------**
+# . HELM Setup
+export VERIFY_CHECKSUM=false
+curl -sSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+# Terraform
+wget https://releases.hashicorp.com/terraform/1.0.7/terraform_1.0.7_linux_amd64.zip
+unzip terraform_1.0.7_linux_amd64.zip
+mkdir ~/bin
+mv terraform ~/bin
+export TF_PLUGIN_CACHE_DIR="/tmp"
+
+# kubectl
+curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+
+#< Refer to line 75 on the README >
+cd Planning-for-High-Availability-and-Incident-Response/project/starter-code/zone1/
+terraform init
+terraform apply --auto-approve
+----------------------------------------------------------
 
 **NOTE** The first time you run `terraform apply` you may see errors about the Kubernetes namespace or an RDS error. Running it again AND performing the step below should clear up those errors.
 
@@ -89,6 +130,21 @@ Clone the appropriate git repo with the starter code. There will be 2 folders. Z
        - e.g ` arn:aws:eks:us-east-2:139802095464:cluster/udacity-cluster`
    - Confirm with: `kubectl get pods --all-namespaces`
    - Then run `kubectl create namespace monitoring`
+
+**----------------------------------------------------------**
+#< Refer to line 85 on the README > . get cluster details
+aws eks --region us-east-2 update-kubeconfig --name udacity-cluster
+#< Refer to line 85 on the README >
+  kubectl config use-context <cluster_name arn:aws>
+  - e.g ` arn:aws:eks:us-east-2:139802095464:cluster/udacity-cluster`
+# Confirm with 
+  kubectl get pods --all-namespaces
+
+terraform apply
+kubectl create namespace monitoring
+terraform apply
+----------------------------------------------------------
+
 **< END VIDEO 2 >**
 
    <!-- - Change context to `udacity` namespace
@@ -118,9 +174,12 @@ sudo systemctl restart nginx
 
 10. Edit the `prometheus-additional.yaml` file and replace the `<public_ip>` entries with the public IP of your Ubuntu Web. Save the file.
 
-10a. Use git commands to copy the changes up to your repo
-10b. Then copy the repo down to you AWS cloudshell
-
+    10a. Use git commands to copy the changes up to your repo
+    10b. Then copy the repo down to you AWS cloudshell
+**^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^**
+  DON'T FORGET
+**----------------------------------------------------------**
+  
 11. Install Prometheus and Grafana
 
     Change directories to your **project** directory `cd ../..`
@@ -131,6 +190,16 @@ sudo systemctl restart nginx
 
     `helm install prometheus prometheus-community/kube-prometheus-stack -f "values.yaml" --namespace monitoring`
 
+**^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^**
+   # Change directories to your **project** directory 
+    cd ../..
+
+    kubectl create secret generic additional-scrape-configs --from-file=prometheus-additional.yaml --namespace monitoring
+
+    helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+    helm install prometheus prometheus-community/kube-prometheus-stack -f "values.yaml" --namespace monitoring
+**----------------------------------------------------------**
 <!-- `helm install prometheus prometheus-community/kube-prometheus-stack --namespace monitoring` -->
 
 <!-- 10. Port forward
@@ -147,6 +216,7 @@ Type that into your web browser to access Grafana.
 Login to Grafana with `admin` for the username and `prom-operator` for the password.
 **< END VIDEO 3 >**
 
+**< START VIDEO 4 >**
 12. Install Postman from [here](https://www.postman.com/downloads/). See additional instructions for [importing the collection, and enviroment files](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/#importing-postman-data)
 
 13. Open Postman and load the files `SRE-Project-postman-collection.json` and `SRE-Project.postman_environment.json`
