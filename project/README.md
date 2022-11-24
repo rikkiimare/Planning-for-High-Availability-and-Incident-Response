@@ -140,10 +140,11 @@ aws eks --region us-east-2 update-kubeconfig --name udacity-cluster
 # Confirm with 
   kubectl get pods --all-namespaces
 
-terraform apply
 kubectl create namespace monitoring
-terraform apply
+terraform apply --auto-approve
 ----------------------------------------------------------
+
+Error due to the existance of udacity-pg-p RDS group
 
 **< END VIDEO 2 >**
 
@@ -179,7 +180,7 @@ sudo systemctl restart nginx
 **^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^**
   DON'T FORGET
 **----------------------------------------------------------**
-  
+
 11. Install Prometheus and Grafana
 
     Change directories to your **project** directory `cd ../..`
