@@ -116,7 +116,8 @@ mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/
 echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
 
 #< Refer to line 75 on the README >
-ß
+cd ~/Planning-for-High-Availability-and-Incident-Response/project/starter-code/zone1
+terraform init
 terraform apply --auto-approve
 ----------------------------------------------------------
 
@@ -125,6 +126,8 @@ rm linux_amd64
 cd ~/Planning-for-High-Availability-and-Incident-Response/
 mv terraform ~/bin
 export TF_PLUGIN_CACHE_DIR="/tmp"
+
+
 
 ----------------------------------------------------------
 
@@ -147,11 +150,7 @@ aws eks --region us-east-2 update-kubeconfig --name udacity-cluster
   kubectl config use-context <cluster_name arn:aws>
   - e.g ` arn:aws:eks:us-east-2:139802095464:cluster/udacity-cluster`
 # Confirm with 
-  kubectl get pods --all-namespaces
-
-kubectl create namespace monitoring
-terraform apply --auto-approve
-
+  ßßßßßß
 ----------------------------------------------------------
 
 Error due to the existance of udacity-pg-p RDS group
