@@ -116,10 +116,18 @@ mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/
 echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
 
 #< Refer to line 75 on the README >
-cd Planning-for-High-Availability-and-Incident-Response/project/starter-code/zone1/
-terraform init
+ß
 terraform apply --auto-approve
 ----------------------------------------------------------
+
+cd .terraform/providers/registry.terraform.io/hashicorp/aws/4.40.0/
+rm linux_amd64
+cd ~/Planning-for-High-Availability-and-Incident-Response/
+mv terraform ~/bin
+export TF_PLUGIN_CACHE_DIR="/tmp"
+
+----------------------------------------------------------
+
 
 **NOTE** The first time you run `terraform apply` you may see errors about the Kubernetes namespace or an RDS error. Running it again AND performing the step below should clear up those errors.
 
@@ -134,6 +142,7 @@ terraform apply --auto-approve
 **----------------------------------------------------------**
 #< Refer to line 85 on the README > . get cluster details
 aws eks --region us-east-2 update-kubeconfig --name udacity-cluster
+
 #< Refer to line 85 on the README >
   kubectl config use-context <cluster_name arn:aws>
   - e.g ` arn:aws:eks:us-east-2:139802095464:cluster/udacity-cluster`
@@ -142,6 +151,7 @@ aws eks --region us-east-2 update-kubeconfig --name udacity-cluster
 
 kubectl create namespace monitoring
 terraform apply --auto-approve
+
 ----------------------------------------------------------
 
 Error due to the existance of udacity-pg-p RDS group
@@ -193,13 +203,14 @@ sudo systemctl restart nginx
 
 **^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^**
    # Change directories to your **project** directory 
-    cd ../..
+    cd ~/Planning-for-High-Availability-and-Incident-Response/project/
 
     kubectl create secret generic additional-scrape-configs --from-file=prometheus-additional.yaml --namespace monitoring
 
     helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 
     helm install prometheus prometheus-community/kube-prometheus-stack -f "values.yaml" --namespace monitoring
+
 **----------------------------------------------------------**
 <!-- `helm install prometheus prometheus-community/kube-prometheus-stack --namespace monitoring` -->
 
