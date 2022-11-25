@@ -115,12 +115,16 @@ chmod +x ./kubectl
 mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
 echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
 
-#< Refer to line 75 on the README >
+# git clone
+git clone https://github.com/rikkiimare/Planning-for-High-Availability-and-Incident-Response.git
+
+# < Refer to line 75 on the README >
 cd ~/Planning-for-High-Availability-and-Incident-Response/project/starter-code/zone1
 terraform init
 terraform apply --auto-approve
 ----------------------------------------------------------
 
+# Clear down commands
 rm .terraform/providers/registry.terraform.io/hashicorp/aws/4.41.0/linux_amd64
 rm .terraform/providers/registry.terraform.io/hashicorp/kubernetes/2.16.0/linux_amd64
 
@@ -193,9 +197,10 @@ sudo systemctl restart nginx
     10a. Use git commands to copy the changes up to your repo
     10b. Then copy the repo down to you AWS cloudshell
 **^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^**
-  DON'T FORGET
+  #DON'T FORGET
   cd ~/Planning-for-High-Availability-and-Incident-Response/
   git pull origin
+  cd ~/Planning-for-High-Availability-and-Incident-Response/project/
 
 **----------------------------------------------------------**
 
