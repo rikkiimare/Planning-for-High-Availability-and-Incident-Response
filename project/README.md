@@ -121,13 +121,15 @@ terraform init
 terraform apply --auto-approve
 ----------------------------------------------------------
 
-cd .terraform/providers/registry.terraform.io/hashicorp/aws/4.40.0/
-rm linux_amd64
+rm .terraform/providers/registry.terraform.io/hashicorp/aws/4.41.0/linux_amd64
+rm .terraform/providers/registry.terraform.io/hashicorp/kubernetes/2.16.0/linux_amd64
+
 cd ~/Planning-for-High-Availability-and-Incident-Response/
 mv terraform ~/bin
 export TF_PLUGIN_CACHE_DIR="/tmp"
-
-
+cd ~/Planning-for-High-Availability-and-Incident-Response/project/starter-code/zone1
+terraform init
+terraform apply --auto-approve
 
 ----------------------------------------------------------
 
@@ -150,7 +152,11 @@ aws eks --region us-east-2 update-kubeconfig --name udacity-cluster
   kubectl config use-context <cluster_name arn:aws>
   - e.g ` arn:aws:eks:us-east-2:139802095464:cluster/udacity-cluster`
 # Confirm with 
-  ßßßßßß
+  kubectl get pods --all-namespaces
+
+kubectl create namespace monitoring
+terraform apply --auto-approve
+
 ----------------------------------------------------------
 
 Error due to the existance of udacity-pg-p RDS group
@@ -188,6 +194,9 @@ sudo systemctl restart nginx
     10b. Then copy the repo down to you AWS cloudshell
 **^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^**
   DON'T FORGET
+  cd ~/Planning-for-High-Availability-and-Incident-Response/
+  git pull origin
+
 **----------------------------------------------------------**
 
 11. Install Prometheus and Grafana
