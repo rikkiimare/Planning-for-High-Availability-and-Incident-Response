@@ -45,10 +45,10 @@ Clone the appropriate git repo with the starter code. There will be 2 folders. Z
 
 AMI details
 east-1
-"ImageId": "ami-0d2e5365761b86bfa"
+"ImageId": "ami-02de6e4139e3d55c3"
 
 {east-2
-    "ImageId": "ami-062a001e7b2179fee"
+    "ImageId": "ami-0cb645ee078860da0"
 }
 {west-1
     "ImageId": "ami-0a4dfce14896f1f90"
@@ -159,7 +159,7 @@ aws eks --region us-east-2 update-kubeconfig --name udacity-cluster
   kubectl get pods --all-namespaces
 
 kubectl create namespace monitoring
-terraform apply --auto-approve
+    terraform apply --auto-approve
 
 ----------------------------------------------------------
 
@@ -223,6 +223,17 @@ sudo systemctl restart nginx
     helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 
     helm install prometheus prometheus-community/kube-prometheus-stack -f "values.yaml" --namespace monitoring
+
+**------ NEW CMDS -----------------------------  
+    helm upgrade -i --wait -n monitoring kube-prometheus-stack kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts \
+
+    --set kube-state-metrics.podSecurityPolicy.enabled=false \
+
+    --set prometheus-node-exporter.rbac.pspEnabled=false \
+
+    --set grafana.rbac.pspEnabled=false \
+
+    --set global.rbac.pspEnabled=false
 
 **----------------------------------------------------------**
 <!-- `helm install prometheus prometheus-community/kube-prometheus-stack --namespace monitoring` -->
