@@ -136,7 +136,8 @@ terraform init
 terraform apply --auto-approve
 
 ----------------------------------------------------------
-
+ # kubectl 
+ kubectl delete all --all -n monitoring
 
 **NOTE** The first time you run `terraform apply` you may see errors about the Kubernetes namespace or an RDS error. Running it again AND performing the step below should clear up those errors.
 
@@ -225,15 +226,7 @@ sudo systemctl restart nginx
     helm install prometheus prometheus-community/kube-prometheus-stack -f "values.yaml" --namespace monitoring
 
 **------ NEW CMDS -----------------------------  
-    helm upgrade -i --wait -n monitoring kube-prometheus-stack kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts \
-
-    --set kube-state-metrics.podSecurityPolicy.enabled=false \
-
-    --set prometheus-node-exporter.rbac.pspEnabled=false \
-
-    --set grafana.rbac.pspEnabled=false \
-
-    --set global.rbac.pspEnabled=false
+    helm upgrade -i --wait -n monitoring kube-prometheus-stack kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts --set kube-state-metrics.podSecurityPolicy.enabled=false --set prometheus-node-exporter.rbac.pspEnabled=false --set grafana.rbac.pspEnabled=false --set global.rbac.pspEnabled=false
 
 **----------------------------------------------------------**
 <!-- `helm install prometheus prometheus-community/kube-prometheus-stack --namespace monitoring` -->
