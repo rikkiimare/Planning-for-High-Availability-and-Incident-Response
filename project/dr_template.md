@@ -1,7 +1,8 @@
 # Infrastructure
 
 ## AWS Zones
-Identify your zones here
+us-east-2
+us-west-1
 
 ## Servers and Clusters
 
