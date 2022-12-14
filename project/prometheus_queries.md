@@ -8,8 +8,8 @@ histogram_quantile(0.90,sum(rate(apiserver_request_duration_seconds_bucket{job="
 
 ## Throughput
 ### Successful requests per second
-1 - ((1 - (sum(increase(apiserver_request_total{job="apiserver", code="200"}[7d])) by (verb)) / sum(increase(apiserver_request_total{job="apiserver"}[7d])) by (verb)) / (1 - .80))
+sum(rate(apiserver_request_total{job="apiserver", code=~"2.."}[1m])) / 60
 
 ## Error Budget - Remaining Error Budget
 ### The error budget is 20%
-sum(rate(apiserver_request_total{job="apiserver", code=~"2.."}[5m]))
+1 - ((1 - (sum(increase(apiserver_request_total{job="apiserver", code="200"}[7d])) by (verb)) / sum(increase(apiserver_request_total{job="apiserver"}[7d])) by (verb)) / (1 - .80))
