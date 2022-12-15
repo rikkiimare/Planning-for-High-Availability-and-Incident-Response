@@ -223,8 +223,7 @@ sudo systemctl restart nginx
 
     helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 
-    helm install prometheus prometheus-community/kube-prometheus-stack -f "values.yaml" --namespace monitoring
-
+    helm install prometheus prometheus-community/kube-prometheus-stack -f "values.yaml" --namespace monitoring --version 18.0.8
 **------ NEW CMDS -----------------------------  
     helm upgrade -i --wait -n monitoring kube-prometheus-stack kube-prometheus-stack --repo https://prometheus-community.github.io/helm-charts --set kube-state-metrics.podSecurityPolicy.enabled=false --set prometheus-node-exporter.rbac.pspEnabled=false --set grafana.rbac.pspEnabled=false --set global.rbac.pspEnabled=false
 
@@ -261,7 +260,7 @@ Login to Grafana with `admin` for the username and `prom-operator` for the passw
 
 ## Project Instructions
 
-1. Create an SLO/SLI document such as the template [here](slo_sli_template.md). You will fill in the **SLI** column with a description of what the combination category and SLO represent. You'll implement these 4 categories in 4 panels in Grafana using Prometheus queries later on. This is a good tool for creating tables in Markdown https://tableconvert.com. I recommend using that tool for MD tables since they can get hard to read in a pure text editor.
+# 1. Create an SLO/SLI document such as the template [here](slo_sli_template.md). You will fill in the **SLI** column with a description of what the combination category and SLO represent. You'll implement these 4 categories in 4 panels in Grafana using Prometheus queries later on. This is a good tool for creating tables in Markdown https://tableconvert.com. I recommend using that tool for MD tables since they can get hard to read in a pure text editor.
 
 2. Create a document that details the infrastructure. This is an exercise to identity assets for failover. You will also define basic DR steps for your infrastructure. Your orgnization has provided you a [requirement document](requirements.md) for the infrastructure. Please see [this document](dr_template.md) for a template to use.
 
