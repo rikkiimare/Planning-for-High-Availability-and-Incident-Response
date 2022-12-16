@@ -38,7 +38,7 @@ locals {
      "kubernetes.io/role/elb" = 1
    }
    providers = {
-      aws = aws.usw1b
+      aws = aws.usw1
     }
  }
 
