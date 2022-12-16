@@ -1,3 +1,10 @@
+terraform {
+  required_providers {
+    aws = {
+      configuration_aliases = [aws.usw1]
+    }
+  }
+}
   locals {
    account_id = data.aws_caller_identity.current.account_id
 
@@ -39,7 +46,7 @@
    }
    providers = {
       aws = aws.usw1
-    }
+  }
  }
 
 output "vpc_id" {
