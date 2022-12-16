@@ -1,8 +1,3 @@
-provider "aws" {
-  alias  = "usw1b"
-  region = "us-west-1"
-}
-
 locals {
    account_id = data.aws_caller_identity.current.account_id
 
