@@ -20,9 +20,8 @@ provider "aws" {
      tags = local.tags
    }
  }
-
   
-# provider "aws" {
-#   alias  = "usw1"
-#   region = "us-west-1"
-# }
+provider "aws" {
+  alias  = "usw1"
+  region = "us-west-1"
+}
