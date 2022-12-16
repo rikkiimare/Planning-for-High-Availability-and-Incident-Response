@@ -1,5 +1,5 @@
 provider "aws" {
-  alias  = "usw1"
+  alias  = "usw1b"
   region = "us-west-1"
 }
 
@@ -43,7 +43,7 @@ locals {
      "kubernetes.io/role/elb" = 1
    }
    providers = {
-      aws = aws.usw1
+      aws = aws.usw1b
     }
  }
 
