@@ -1,11 +1,6 @@
-terraform {
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-    }
-    alias  = "usw1"
-    region = "us-west-1"
-  }
+provider "aws" {
+  alias  = "usw1"
+  region = "us-west-1"
 }
 
 locals {
