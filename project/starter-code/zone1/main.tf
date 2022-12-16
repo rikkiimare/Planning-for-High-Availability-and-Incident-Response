@@ -1,11 +1,3 @@
-terraform {
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-    }
-  }
-}
-
   locals {
    account_id = data.aws_caller_identity.current.account_id
 
