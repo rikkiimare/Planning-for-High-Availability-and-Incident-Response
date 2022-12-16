@@ -1,17 +1,17 @@
 terraform {
-   backend "s3" {
+  required_version = ">= 0.13"
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      configuration_aliases = [ aws.usw1 ]
+    }
+  }
+  
+  backend "s3" {
      bucket = "udacity-tf-rirving"
      key    = "terraform/terraform.tfstate"
      region = "us-east-2"
    }
-
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.0"
-    }
-  }
-
  }
 
 provider "aws" {
