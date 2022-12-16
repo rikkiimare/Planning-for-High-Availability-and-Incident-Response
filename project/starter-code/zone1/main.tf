@@ -7,10 +7,7 @@
 #   }
 #   }
   
-  provider "aws" {
-    alias  = "usw1"
-    region = "us-west-1"
-  }
+
 
   locals {
    account_id = data.aws_caller_identity.current.account_id
@@ -50,6 +47,10 @@
    }
    public_subnet_tags = {
      "kubernetes.io/role/elb" = 1
+   }
+   provider "aws" {
+      alias  = "usw1"
+      region = "us-west-1"
    }
    providers = {
       aws = aws.usw1
