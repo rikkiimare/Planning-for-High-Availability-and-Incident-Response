@@ -35,11 +35,6 @@
     }
    }
 
-  provider "aws" {
-    alias  = "usw1"
-    region = "us-west-1"
-  }
-
    source     = "./modules/vpc"
    cidr_block = "10.100.0.0/16"
 
@@ -53,7 +48,7 @@
      "kubernetes.io/role/elb" = 1
    }
    providers = {
-      aws = aws.usw1
+      aws = "us-west-1"
   }
  }
 
