@@ -1,4 +1,14 @@
-resource "aws_vpc" "this" {
+  terraform {
+    required_providers {
+      aws = {
+        source = "hashicorp/aws"
+        version = "~> 4.0"
+        configuration_aliases = [aws.usw1]
+      }
+    }
+   }
+   
+   resource "aws_vpc" "this" {
    cidr_block           = var.cidr_block
    enable_dns_hostnames = true
    enable_dns_support   = true
