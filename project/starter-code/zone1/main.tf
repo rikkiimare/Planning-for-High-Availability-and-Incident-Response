@@ -25,6 +25,14 @@
  }
 
   module "vpc_west" {
+   terraform {
+    required_providers {
+      aws = {
+        source = "hashicorp/aws"
+      }
+    }
+   }
+
    source     = "./modules/vpc"
    cidr_block = "10.100.0.0/16"
 
