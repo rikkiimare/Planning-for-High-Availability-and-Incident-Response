@@ -1,12 +1,12 @@
-  terraform {
-    required_providers {
-      aws = {
-        source = "hashicorp/aws"
-        version = "~> 4.0"
-        configuration_aliases = [aws.usw1]
-      }
-    }
-   }
+  # terraform {
+  #   required_providers {
+  #     aws = {
+  #       source = "hashicorp/aws"
+  #       version = "~> 4.0"
+  #       configuration_aliases = [aws.usw1]
+  #     }
+  #   }
+  #  }
    
    resource "aws_vpc" "this" {
    cidr_block           = var.cidr_block
