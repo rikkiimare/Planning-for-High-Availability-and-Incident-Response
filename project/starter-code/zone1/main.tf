@@ -48,7 +48,7 @@
      "kubernetes.io/role/elb" = 1
    }
    providers = {
-      aws = "us-west-1"
+      aws = aws.usw1
   }
  }
 
