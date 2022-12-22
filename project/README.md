@@ -262,17 +262,17 @@ Login to Grafana with `admin` for the username and `prom-operator` for the passw
 
 # 1. Create an SLO/SLI document such as the template [here](slo_sli_template.md). You will fill in the **SLI** column with a description of what the combination category and SLO represent. You'll implement these 4 categories in 4 panels in Grafana using Prometheus queries later on. This is a good tool for creating tables in Markdown https://tableconvert.com. I recommend using that tool for MD tables since they can get hard to read in a pure text editor.
 
-2. Create a document that details the infrastructure. This is an exercise to identity assets for failover. You will also define basic DR steps for your infrastructure. Your orgnization has provided you a [requirement document](requirements.md) for the infrastructure. Please see [this document](dr_template.md) for a template to use.
+# 2. Create a document that details the infrastructure. This is an exercise to identity assets for failover. You will also define basic DR steps for your infrastructure. Your orgnization has provided you a [requirement document](requirements.md) for the infrastructure. Please see [this document](dr_template.md) for a template to use.
 
 3. Open Grafana in your web browser
-    1. Create a new dashboard with 4 panels. The Prometheus datasource should already be added that you can pull data from. The Flask exporter exports metrics for your EC2 instances provisioned during the install. Please note, while making the panel display the information in a way that makes sense (percentage, milliseconds, etc.) is also good, it is not necessarily a requirement. The backend query and data representation is more important. Same goes for colors and type of graph displayed.
-    2. Create the 4 SLO/SLI panels as defined in the SLO/SLI document. The 4 panel categories will be availability (availability), remaining error budget (error budget), successful requests per second (throughput), and 90th percentile requests finish in this time (latency). See the following for more information on potential metrics to use https://github.com/rycus86/prometheus_flask_exporter
-        - **NOTE**: You will not see the goal SLO numbers in your dashboard and that is fine. The application doesn't have enough traffic or time to generate a 99% availabiliy or have an error budget that works.
-    3. Please submit your Prometheus queries you use for you dashboards in the `prometheus_queries.md` file [linked here](prometheus_queries.md).
-    4. Please take a screenshot of your created dashboard and include that as part of your submission for the project.
+    # 1. Create a new dashboard with 4 panels. The Prometheus datasource should already be added that you can pull data from. The Flask exporter exports metrics for your EC2 instances provisioned during the install. Please note, while making the panel display the information in a way that makes sense (percentage, milliseconds, etc.) is also good, it is not necessarily a requirement. The backend query and data representation is more important. Same goes for colors and type of graph displayed.
+    # 2. Create the 4 SLO/SLI panels as defined in the SLO/SLI document. The 4 panel categories will be availability (availability), remaining error budget (error budget), successful requests per second (throughput), and 90th percentile requests finish in this time (latency). See the following for more information on potential metrics to use https://github.com/rycus86/prometheus_flask_exporter
+      #  - **NOTE**: You will not see the goal SLO numbers in your dashboard and that is fine. The application doesn't have enough traffic or time to generate a 99% availabiliy or have an error budget that works.
+    # 3. Please submit your Prometheus queries you use for you dashboards in the `prometheus_queries.md` file [linked here](prometheus_queries.md).
+    # 4. Please take a screenshot of your created dashboard and include that as part of your submission for the project.
 
-4. Deploy the infrastructure to zone1
-    1. You will need to make sure the infrastructure is highly available. Please see the `requirements.md` document [here](requirements.md) for details on the requirements for making the infrastructure HA. You will modify your code to meet those requirements.
+# 4. Deploy the infrastructure to zone1
+  #  1. You will need to make sure the infrastructure is highly available. Please see the `requirements.md` document [here](requirements.md) for details on the requirements for making the infrastructure HA. You will modify your code to meet those requirements.
         **Note for availability zones** that not all regions have the same number of availability zones. You will need to lookup the AZs for `us-east-2`. You will get errors when first running the code you will have to fix!
         - For the application load balancer, please note the technical requirements:
             - This will attach to the Ubuntu VMs on port 80.
@@ -280,20 +280,20 @@ Login to Grafana with `admin` for the username and `prom-operator` for the passw
         <!-- - You will need to set the following for the RDS instnaces
             - Create 2 instances nodes for each cluster
             - Set the backup retention window to 5 days -->
-    2. Make the appropriate changes to your code
+  #  2. Make the appropriate changes to your code
         - `cd` into your `zone1` folder
         - `terraform init`
         - `terraform apply`
-    3. Please take a screenshot of a successful Terraform run and include that as part of your submission for the project.
+  #  3. Please take a screenshot of a successful Terraform run and include that as part of your submission for the project.
 
 5. Deploy the infrastructure to zone2 (DR)
-    1. You will need to make sure the infrastructure is highly available. Please see the `requirements.md` document [here](requirements.md) for details on the requirements for making the infrastructure HA. You will modify your code to meet those requirements.
+   # 1. You will need to make sure the infrastructure is highly available. Please see the `requirements.md` document [here](requirements.md) for details on the requirements for making the infrastructure HA. You will modify your code to meet those requirements.
         <!-- - Each VM has 3 instances (EC2)
         - Each Kubernetes cluster has 2 nodes -->
         <!-- - The VPC has IPs in multiple availability zones.  -->
         **Note for availability zones** that not all regions have the same number of availability zones. You will need to lookup the AZs for `us-west-1`. You will get errors when first running the code you will have to fix in the `zone1` `main.tf` file
-        - You will need to update the bucket name in the `_data.tf` file under the `zone2` folder to reflect the name of the bucket you provisioned in `us-east-2` earlier
-        - For the application load balancer, please note the technical requirements:
+   #     - You will need to update the bucket name in the `_data.tf` file under the `zone2` folder to reflect the name of the bucket you provisioned in `us-east-2` earlier
+   #     - For the application load balancer, please note the technical requirements:
             - This will attach to the Ubuntu VMs on port 80.
             - It should listen on port 80
             - **HINT**: we actually provisioned the VPC for us-west-1 in the `zone1` folder, so you'll need to reference the subnet and vpc ID from that module output. Here is the code block you'll need to utilize for the ALB:
@@ -301,11 +301,11 @@ Login to Grafana with `admin` for the username and `prom-operator` for the passw
             subnet_id = data.terraform_remote_state.vpc.outputs.public_subnet_ids
             vpc_id = data.terraform_remote_state.vpc.outputs.vpc_id
             ```
-    2. Make the appropriate changes to your code
+    # 2. Make the appropriate changes to your code
     - `cd` into your `zone2` folder
     - `terraform init`
     - `terraform apply`
-    3. Please take a screenshot of a successful Terraform run and include that as part of your submission for the project.
+     3. Please take a screenshot of a successful Terraform run and include that as part of your submission for the project.
 
 6. Implement basic SQL replication and establish backups
     **NOTE:** The RDS configuration is completed under the `zone1` folder. Due to the way it was implemented in Terraform BOTH region RDS instances are completed under the same Terraform project.
