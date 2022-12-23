@@ -135,6 +135,17 @@ cd ~/Planning-for-High-Availability-and-Incident-Response/project/starter-code/z
 terraform init
 terraform apply --auto-approve
 
+# kubectl
+kubectl config get-contexts
+
+kubectl config delete-cluster <arn details>
+
+kubectl config view 
+
+kubectl config use-context CONTEXT-CHOSEN-FROM-PREVIOUS-COMMAND-OUTPUT
+
+kubectl config --help
+
 ----------------------------------------------------------
  # kubectl 
  kubectl delete all --all -n monitoring
@@ -150,12 +161,18 @@ terraform apply --auto-approve
    - Then run `kubectl create namespace monitoring`
 
 **----------------------------------------------------------**
+# Runin Zone 1 - us-east-2
 #< Refer to line 85 on the README > . get cluster details
 aws eks --region us-east-2 update-kubeconfig --name udacity-cluster
 
 #< Refer to line 85 on the README >
   kubectl config use-context <cluster_name arn:aws>
   - e.g ` arn:aws:eks:us-east-2:139802095464:cluster/udacity-cluster`
+
+# Runin Zone 2 - us-west-1
+aws eks --region us-west-1 update-kubeconfig --name udacity-cluster
+kubectl config use-context 
+
 # Confirm with 
   kubectl get pods --all-namespaces
 
