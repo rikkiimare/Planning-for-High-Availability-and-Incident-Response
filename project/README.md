@@ -144,7 +144,7 @@ kubectl config view
 
 kubectl config use-context CONTEXT-CHOSEN-FROM-PREVIOUS-COMMAND-OUTPUT
 
-kubectl config --help
+kubectl delete all --all -n monitoring
 
 ----------------------------------------------------------
  # kubectl 
