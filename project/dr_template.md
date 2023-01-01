@@ -12,17 +12,20 @@ AZs us-west-1b, us-west-1c
 ## Servers and Clusters
 
 ### Table 1.1 Summary
-| **Asset**                 | **Purpose**                | **Size**    | **Qty**            | **DR**                                                                               |
-|---------------------------|----------------------------|-------------|--------------------|--------------------------------------------------------------------------------------|
-| Ubuntu-Web                | Application Front-end      | t3.micro    | 3                  | us-east-2 - Alternate in Zone 2                                                      |
-| Ubuntu-Web                | Application Front-end      | t3.micro    | 3                  | us-west-1 - Alternate in Zone 1                                                      |
-| udacity-lb-tf             | App Load Balancer (east-2) | N/A         | 1                  | Fault resilient native to ALB                                                        |
-| udacity-lb-tf             | App Load Balancer (west-1) | N/A         | 1                  | Fault resilient native to ALB                                                        |
-| udacity-cluster           | EKS Cluster                | t3.medium   | nodes_min_size = 2 | Increase the number of desired, min & max nodes within eks.tf                        |
-| udacity-project           | VPC                        | N/A         | 1 in each region   | Network spanning multiple AWS regions                                                |
-| udacity-db-instance-0 (p) | us-east-2 node             | db.t2.small | 2                  | Auto failover,backup retention set to 5 days with multiple AZs & replicated to zone2 |
-| udacity-db-instance-1 (s) | us-west-1 node             | db.t2.small | 2                  | Auto failover, backup retention set to 5 days with multiple AZs**                    |
-| udacity-db-cluster        | RDS Cluster                | N/A         | Number of nodes    |                                                                                      |
+| **Asset**            | **Purpose**                                                                               | **Size**    | **Qty**            | **DR**                                                                               |
+|----------------------|-------------------------------------------------------------------------------------------|-------------|--------------------|--------------------------------------------------------------------------------------|
+| EC2 Instance         | Application Front-end                                                                     | t3.micro    | 3                  | us-east-2 - Alternate in Zone 2                                                      |
+| EC2 Instance         | Application Front-end                                                                     | t3.micro    | 3                  | us-west-1 - Alternate in Zone 1                                                      |
+| EC2 Security Group   | Define allowed ports and protocols                                                        | N/A         | 1 in each region   |                                                                                      |
+| App Load Balancer    | Balance traffic between available FE servers (east-2)                                     | N/A         | 1                  | Fault resilient native to ALB                                                        |
+| App Load Balancer    | Balance traffic between available FE servers (west-1)                                     | N/A         | 1                  | Fault resilient native to ALB                                                        |
+| EKS Cluster (east-2) | Run Prometheus and Grafana monitoring                                                     | t3.medium   | nodes_min_size = 1 | Increase the number of desired, min & max nodes within eks.tf                        |
+| EKS Cluster (west-1) | Run Prometheus and Grafana monitoring                                                     | t3.medium   | nodes_min_size = 1 | Increase the number of desired, min & max nodes within eks.tf                        |
+| VPC                  | Define public and private subnets, ip ranges - CIDR Blocks for both east and west regions | N/A         | 1 in each region   | Network spanning multiple AWS regions                                                |
+| RDS Cluster          | Database cluster                                                                          | N/A         | 1 in each region   | Replication between Primary (writer) and Secondary (reader) cluster nodes            |
+| RDS Cluster instance | cluster nodes in us-east-2                                                                | db.t2.small | 2                  | Auto failover,backup retention set to 5 days with multiple AZs & replicated to zone2 |
+| RDS Cluster instance | cluster nodes in us-west-1                                                                | db.t2.small | 2                  | Auto failover, backup retention set to 5 days with multiple AZs**                    |
+
 
 ### Descriptions
 Six application targets for the user to access.  A web instance will be online in each AZ of each region. Traffic is distributed between each web server in a region by that regions ALBs.
