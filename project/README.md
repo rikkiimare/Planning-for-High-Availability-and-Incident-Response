@@ -45,13 +45,13 @@ Clone the appropriate git repo with the starter code. There will be 2 folders. Z
 
 AMI details
 east-1
-"ImageId": "ami-02de6e4139e3d55c3"
+ "ImageId": "ami-0f1ab8c1df7f820d6"
 
 {east-2
-    "ImageId": "ami-0cb645ee078860da0"
+    "ImageId": "ami-02cf67e2aeac2e1cf"
 }
 {west-1
-    "ImageId": "ami-0a4dfce14896f1f90"
+    "ImageId": "ami-09761ca3036e137d0"
 }
 
 
@@ -234,6 +234,7 @@ sudo systemctl restart nginx
 
 **^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^**
    # Change directories to your **project** directory 
+    git pull origin
     cd ~/Planning-for-High-Availability-and-Incident-Response/project/
 
     kubectl create secret generic additional-scrape-configs --from-file=prometheus-additional.yaml --namespace monitoring
