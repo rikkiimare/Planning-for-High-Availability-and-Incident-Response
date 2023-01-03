@@ -7,7 +7,7 @@ terraform {
    }
 
    backend "s3" {
-     bucket = "udacity-tf-irvingr"
+     bucket = "udacity-tf-rirving"
      key    = "terraform/terraform.tfstate"
      region = "us-east-2"
    }
