@@ -17,6 +17,10 @@ AZs us-west-1b, us-west-1c
 | EC2 Instance         | Application Front-end                                                                     | t3.micro    | 3                  | us-east-2 - Alternate in Zone 2                                                      |
 | EC2 Instance         | Application Front-end                                                                     | t3.micro    | 3                  | us-west-1 - Alternate in Zone 1                                                      |
 | EC2 Security Group   | Define allowed ports and protocols                                                        | N/A         | 1 in each region   |                                                                                      |
+| EC2 Key Pair         | Public and Private keys for remote access to resources                                    | N/A         | 1                  | us-east-2 - Alternate in Zone 2                                                      |
+| EC2 Key Pair         | Public and Private keys for remote access to resources                                    | N/A         | 1                  | us-west-1 - Alternate in Zone 1                                                      |
+| S3 Bucket            | Hold ami image for us-east-2                                                              | N/A         | 1                  | separate S3 bucket in Zone 2 (us-west-1)                                             |
+| S3 Bucket            | Hold ami image for us-west-1                                                              | N/A         | 1                  | separate S3 bucket in Zone 1 (us-east-2)                                             |
 | App Load Balancer    | Balance traffic between available FE servers (east-2)                                     | N/A         | 1                  | Fault resilient native to ALB                                                        |
 | App Load Balancer    | Balance traffic between available FE servers (west-1)                                     | N/A         | 1                  | Fault resilient native to ALB                                                        |
 | EKS Cluster (east-2) | Run Prometheus and Grafana monitoring                                                     | t3.medium   | nodes_min_size = 1 | Increase the number of desired, min & max nodes within eks.tf                        |
@@ -25,6 +29,7 @@ AZs us-west-1b, us-west-1c
 | RDS Cluster          | Database cluster                                                                          | N/A         | 1 in each region   | Replication between Primary (writer) and Secondary (reader) cluster nodes            |
 | RDS Cluster instance | cluster nodes in us-east-2                                                                | db.t2.small | 2                  | Auto failover,backup retention set to 5 days with multiple AZs & replicated to zone2 |
 | RDS Cluster instance | cluster nodes in us-west-1                                                                | db.t2.small | 2                  | Auto failover, backup retention set to 5 days with multiple AZs**                    |
+
 
 
 ### Descriptions
