@@ -33,7 +33,11 @@ AZs us-west-1b, us-west-1c
 
 
 ### Descriptions
-Six application targets for the user to access.  A web instance will be online in each AZ of each region. Traffic is distributed between each web server in a region by that regions ALBs.
+Six application targets for the user to access.  A web instance will be online in each AZ of each region. Traffic is distributed between each web server in a region by that regions ALBs. A security group is created in each region to ensure the ingress and egress traffic allowed protocols and ports are managed for any existing or new EC2 instance. 
+
+A EC2 key pair is created in each region to provide security credentials to a remote host proving identity of user for access to EC2 Instances.
+
+A S3 bucket is created in each region also.  This is used in this instance to store terraform config files in a none volitile location.
 
 Web URL held as a DNS entry which can route traffic to either region via relevant ALB.
 
